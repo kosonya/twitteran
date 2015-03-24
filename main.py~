@@ -32,11 +32,11 @@ print api.VerifyCredentials()
 
 #statuses = api.GetSearch(until="2013-09-11", count = 10)
 
-statuses = api.GetSearch(term = "snow", count = 100000, geocode=("45.023513", "-109.915807", "100mi"), result_type="recent")
+statuses = api.GetSearch(term = "storm", count = 100000, geocode=("45.023513", "-109.915807", "100mi"), result_type="recent")
 
 print statuses
 
-dumpfile = open("statuses_100000_recent_geocode_snow.pkl", "wb")
+dumpfile = open("statuses_100000_recent_geocode_storm.pkl", "wb")
 pickle.dump(statuses, dumpfile)
 dumpfile.close()
 
