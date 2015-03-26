@@ -3,15 +3,16 @@
 
 import twitter
 import pickle
+import tweetstream
 
 CONSUMER_KEY = 'nvHkjbdhV4PI9WrYdpqaSmmT5'
 CONSUMER_SECRET ='kNEg2zwBaBNQOug3yaQ5r0r0aqXHrMJdTEUvps9a3byG7bVppK'
 OAUTH_TOKEN = '85889667-BNUJlo9r8KeA8CXPwkGm3mPkuBD634bUH8QVyQ2tG'
 OAUTH_TOKEN_SECRET = 'nKijMpWwDEHmWD7mIWtMhdtIRc4KQo59MvcnQF5ffsdxJ'
 
-api = twitter.Api(consumer_key=CONSUMER_KEY, consumer_secret=CONSUMER_SECRET, access_token_key=OAUTH_TOKEN, access_token_secret=OAUTH_TOKEN_SECRET) 
+#api = twitter.Api(consumer_key=CONSUMER_KEY, consumer_secret=CONSUMER_SECRET, access_token_key=OAUTH_TOKEN, access_token_secret=OAUTH_TOKEN_SECRET) 
 
-print api.VerifyCredentials()
+#print api.VerifyCredentials()
 
 #statuses = api.GetHomeTimeline()
 #for status in statuses:
@@ -32,14 +33,18 @@ print api.VerifyCredentials()
 
 #statuses = api.GetSearch(until="2013-09-11", count = 10)
 
-statuses = api.GetSearch(term = "storm", count = 1000000, geocode=("45.023513", "-109.915807", "100000mi"), result_type="recent")
+#statuses = api.GetSearch(term = "snow", count = 100000, geocode=("45.023513", "-109.915807", "100mi"), result_type="recent")
 
-print statuses
+#print statuses
 
-dumpfile = open("statuses_100000_recent_geocode_snow_100000mi.pkl", "wb")
-pickle.dump(statuses, dumpfile)
-dumpfile.close()
+#dumpfile = open("statuses_100000_recent_geocode_snow.pkl", "wb")
+#pickle.dump(statuses, dumpfile)
+#dumpfile.close()
 
-for status in statuses:
-	print status.text
-	print "\n\n"
+#for status in statuses:
+#	print status.text
+#	print "\n\n"
+
+stream = tweetstream.SampleStream("hipno.zomby@gmail.com", "karidola")
+for tweet in stream:
+	print tweet
