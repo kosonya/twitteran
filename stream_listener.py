@@ -20,7 +20,7 @@ consumer_key = "ENTER YOUR API KEY"
 consumer_secret = "ENTER YOUR API SECRET"
 
 
-f = open("/mnt/data/twitterdump/dump_mar_25_13_40", "w", 0)
+f = open("/mnt/data/twitterdump/dump_mar_26_0_17", "w", 0)
 
 #This is a basic listener that just prints received tweets to stdout.
 class StdOutListener(StreamListener):
@@ -43,5 +43,5 @@ if __name__ == '__main__':
 	stream = Stream(auth, l)
 
 
-	stream.filter(track=['rain', 'thunder', 'lightning', 'hurricane', 'storm', 'hail', 'snow', 'flood', 'cloud', 'overcast'])
+	stream.filter(track=['rain', 'thunder', 'lightning', 'hurricane', 'storm', 'hail', 'snow', 'flood', 'cloud', 'overcast', 'shower'])
 
