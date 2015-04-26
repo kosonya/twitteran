@@ -13,14 +13,8 @@ from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
 
-#Variables that contains the user credentials to access Twitter API 
-access_token = "ENTER YOUR ACCESS TOKEN"
-access_token_secret = "ENTER YOUR ACCESS TOKEN SECRET"
-consumer_key = "ENTER YOUR API KEY"
-consumer_secret = "ENTER YOUR API SECRET"
 
-
-f = open("/mnt/data/twitterdump/dump_mar_26_0_17", "w", 0)
+f = open("/mnt/data/twitterdump/dump_mar_31_9_10", "w", 0)
 
 #This is a basic listener that just prints received tweets to stdout.
 class StdOutListener(StreamListener):
@@ -36,12 +30,18 @@ class StdOutListener(StreamListener):
 
 if __name__ == '__main__':
 
-	#This handles Twitter authetification and the connection to Twitter Streaming API
-	l = StdOutListener()
-	auth = OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
-	auth.set_access_token(OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
-	stream = Stream(auth, l)
+
+	while True:
+		try:
+
+			#This handles Twitter authetification and the connection to Twitter Streaming API
+			l = StdOutListener()
+			auth = OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+			auth.set_access_token(OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
+			stream = Stream(auth, l)
 
 
-	stream.filter(track=['rain', 'thunder', 'lightning', 'hurricane', 'storm', 'hail', 'snow', 'flood', 'cloud', 'overcast', 'shower'])
+			stream.filter(track=['rain', 'thunder', 'lightning', 'hurricane', 'storm', 'hail', 'snow', 'flood', 'cloud', 'overcast', 'shower'])
+		except Exception as e:
+			print e
 
