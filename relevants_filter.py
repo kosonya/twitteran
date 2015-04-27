@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf8 -*-
 
-import re
 import json
 import pickle
 import dateutil.parser
 import math
+import datetime
+
 
 def haversine_dist(p1, p2):
 	lat1, lon1 = map(math.radians, p1)
@@ -21,14 +22,16 @@ def haversine_dist(p1, p2):
 def main():
 	f_src = open("../twitterdump/dump_mar_31_9_10_with_geo", "r")
 
-	start_timestamp = dateutil.parser.parse("Tue Mar 31 18:45:01 +0000 2015")
-	stop_timestamp = dateutil.parser.parse("Wed Apr 01 23:45:01 +0000 2015")
-	geo_center = (39.079908, -101.959464)
-	geo_radius = 2000
+	alert_start = dateutil.parser.parse("Thu Apr 02 18:17:00 -0400 2015")
+	alert_stop = dateutil.parser.parse("Thu Apr 02 18:35:00 -0400 2015")
+	geo_center = (38.205586, -84.247523)
+	geo_radius = 200
 
-	#keywords = re.compile("( rain|storm|cloud| thunder|hurricane|tornado| hail| snow|flood| snow)", re.IGNORECASE)
+	start_timestamp = alert_start - datetime.timedelta(days=1)
+	stop_timestamp = alert_stop + datetime.timedelta(days=1)
 
-	#goods = []
+
+	goods = []
 	for line in f_src:
 		try:
 			parsed = json.loads(line)
@@ -36,38 +39,30 @@ def main():
 			#coordinates = parsed['retweeted_status']['coordinates']
 			coordinates = parsed['coordinates']
 			created_at = parsed['created_at']
-			#print coordinates
-			#print created_at
-			#print "AAAA"
 			if not coordinates or not created_at:
-				#if "coordinates" in line:
-				#	#print line
-				#	pass
+
 				continue
 			else:
-				#print coordinates, ":", text, '\n'
-				#goods.append(parsed)
-				#print line
-				#print "created at:", created_at
 				timestamp = dateutil.parser.parse(created_at)
-				#print "timestamp:", timestamp, "stop_timestamp:", stop_timestamp, "timestamp - start_timestamp:", timestamp - start_timestamp, "stop_timestamp - timestamp:", stop_timestamp - timestamp
-				#print coordinates
 				if start_timestamp <= timestamp <= stop_timestamp:
-					#print "Time HIT!!!!"
 					if coordinates["type"] == "Point":
 						lon, lat = coordinates["coordinates"]
-						#print lat, lon, haversine_dist(geo_center, (lat, lon))
 						if haversine_dist(geo_center, (lat, lon)) <= geo_radius:
 							print "Geo HIT!!!"
-							print parsed
-					
+							print parsed	
+							goods.append(parsed)
 		except Exception as e:
 			if True:
 				print e
+				print line
 			else:
 				pass
 
 	f_src.close()
+
+	f_dst = open("../fetched_data/bourbon_ky_thunderstorm_04_02_2015.pkl", "wb")
+	pickle.dump((goods, alert_start, alert_stop, geo_center, geo_radius, start_timestamp, stop_timestamp), f_dst)
+	f_dst.close()
 
 
 if __name__ == "__main__":
