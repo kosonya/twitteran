@@ -297,7 +297,7 @@ def main():
 				#print word_count_after_alert[key], type(word_count_after_alert)
 				#print word_count_before_alert[key], type(word_count_before_alert)
 				#print word_count_after_alert[key] - word_count_before_alert[key]
-				diff[key] = word_count_after_alert[key] / max(word_count_before_alert[key], 1e-10)
+				diff[key] = word_count_after_alert[key] - word_count_before_alert[key]
 			#print sorted(diff.items(), key=lambda x: -abs(x[1]))
 			diffs.append(diff)
 	if mode in ["density", "cummulative"]:
